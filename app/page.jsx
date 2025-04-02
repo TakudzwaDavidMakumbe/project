@@ -1,5 +1,11 @@
 "use client";
 
+import { a } from '@/components/ui/toggle';
+import { button } from '@/components/ui/button';
+import { id, p } from '@/components/ui/tooltip';
+import { nav } from '@/components/ui/navigation-menu';
+import ProjectCard from './components/ProjectCard';
+
 import { 
   Github, 
   Mail, 
@@ -15,7 +21,9 @@ import {
   Server, 
   Globe, 
   Blocks, 
-  PenTool 
+  PenTool,
+  Menu, 
+  X 
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -24,6 +32,8 @@ import MessageMe from './components/MessageMe';
 export default function Home() {
   const [currentProject, setCurrentProject] = useState('Portfolio');
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,6 +63,79 @@ export default function Home() {
       description: 'Get answers to your kahoot quiz',
       tech: 'CSS Express Node.js',
       image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2000',
+      link: '#'
+    }
+  ];
+
+  const allProjects = [
+    {
+      title: 'ChertNodes',
+      description: 'Minecraft servers hosting',
+      tech: 'HTML SCSS Python Flask',
+      image: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?q=80&w=2000',
+      link: '#'
+    },
+    {
+      title: 'ProtectX',
+      description: 'Discord anti-crash bot',
+      tech: 'React Express Discord.js Node.js',
+      image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=2000',
+      link: '#'
+    },
+    {
+      title: 'Kahoot Answers',
+      description: 'Get answers to your kahoot quiz',
+      tech: 'CSS Express Node.js',
+      image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2000',
+      link: '#'
+    },
+    {
+      title: 'WeatherNow',
+      description: 'Real-time weather updates',
+      tech: 'React TailwindCSS OpenWeatherAPI',
+      image: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?q=80&w=2000',
+      link: '#'
+    },
+    {
+      title: 'Taskify',
+      description: 'Task management app',
+      tech: 'Vue.js Firebase',
+      image: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?q=80&w=2000',
+      link: '#'
+    },
+    {
+      title: 'ShopEase',
+      description: 'E-commerce platform',
+      tech: 'Next.js TailwindCSS Stripe',
+      image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2000',
+      link: '#'
+    },
+    {
+      title: 'Blogify',
+      description: 'Personal blogging platform',
+      tech: 'Gatsby GraphQL',
+      image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2000',
+      link: '#'
+    },
+    {
+      title: 'PortfolioX',
+      description: 'Portfolio website template',
+      tech: 'HTML CSS JavaScript',
+      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2000',
+      link: '#'
+    },
+    {
+      title: 'CryptoTracker',
+      description: 'Cryptocurrency price tracker',
+      tech: 'React Redux CoinGeckoAPI',
+      image: 'https://images.unsplash.com/photo-1518546305921-e6c5e4a9f6b3?q=80&w=2000',
+      link: '#'
+    },
+    {
+      title: 'EduLearn',
+      description: 'Online learning platform',
+      tech: 'Angular Node.js MongoDB',
+      image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2000',
       link: '#'
     }
   ];
@@ -88,26 +171,52 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#1a1b1e] text-white">
       {/* Header */}
-      <nav
-        className={`fixed w-full bg-[#1a1b1e]/80 backdrop-blur-sm z-50 px-6 py-4 transition-transform ${
-          isVisible ? 'translate-y-0' : '-translate-y-full'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <Link href="/" className="text-xl font-bold flex items-center gap-2">
-            <Code2 className="h-6 w-6" />
-            Elias
-          </Link>
-          <div className="flex gap-6">
+        <nav
+          className={`fixed w-full bg-[#1a1b1e]/80 backdrop-blur-sm z-50 px-6 py-4 transition-transform ${
+            isVisible ? 'translate-y-0' : '-translate-y-full'
+          }`}
+        >
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <Link href="/" className="text-xl font-bold flex items-center gap-2">
+          <Code2 className="h-6 w-6" />
+          Elias
+            </Link>
+
+            {/* Mobile Menu Button */}
+            <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden"
+            >
+          {isMobileMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+            </button>
+
+            {/* Desktop Menu */}
+            <div className="hidden md:flex gap-6">
+          <Link href="#projects" className="hover:text-purple-400 transition-colors">#projects</Link>
+          <Link href="#skills" className="hover:text-purple-400 transition-colors">#skills</Link>
+          <Link href="#about-me" className="hover:text-purple-400 transition-colors">#about-me</Link>
+          <Link href="#contacts" className="hover:text-purple-400 transition-colors">#contacts</Link>
+            </div>
+
+            {/* Mobile Menu */}
+            <div className={`md:hidden absolute top-full left-0 w-full bg-[#1a1b1e] py-4 px-6 ${
+          isMobileMenuOpen ? 'block' : 'hidden'
+            }`}>
+          <div className="flex flex-col gap-4">
             <Link href="#projects" className="hover:text-purple-400 transition-colors">#projects</Link>
             <Link href="#skills" className="hover:text-purple-400 transition-colors">#skills</Link>
             <Link href="#about-me" className="hover:text-purple-400 transition-colors">#about-me</Link>
             <Link href="#contacts" className="hover:text-purple-400 transition-colors">#contacts</Link>
           </div>
-        </div>
-      </nav>
+            </div>
+          </div>
+        </nav>
 
-      {/* Hero Section */}
+        {/* Hero Section */}
       <section className="pt-32 px-6">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
           <div className="animate-fade-in">
@@ -156,40 +265,38 @@ export default function Home() {
             <h2 className="text-3xl font-bold">
               <span className="text-purple-400">#</span>projects
             </h2>
-            <Link href="/projects" className="text-gray-400 hover:text-white flex items-center gap-2">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="text-gray-400 hover:text-white flex items-center gap-2"
+            >
               View all <ArrowUpRight className="h-4 w-4" />
-            </Link>
+            </button>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <div
-                key={project.title}
-                className="bg-[#2a2b2e] rounded-lg overflow-hidden group animate-slide-up"
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <p className="text-sm text-gray-400 mb-2">{project.tech}</p>
-                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-gray-400 mb-4">{project.description}</p>
-                  <div className="flex gap-4">
-                    <Link
-                      href={project.link}
-                      className="px-4 py-2 border border-purple-400 text-purple-400 rounded hover:bg-purple-400 hover:text-white transition-colors"
-                    >
-                      Live <ArrowUpRight className="inline h-4 w-4" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
+            {projects.slice(0, 3).map((project) => (
+              <ProjectCard key={project.title} project={project} />
             ))}
           </div>
         </div>
+
+        {/* Modal */}
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+            <div className="bg-[#1a1b1e] rounded-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold">All Projects</h2>
+                <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-white">
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {allProjects.map((project) => (
+                  <ProjectCard key={project.title} project={project} />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Skills Section */}
